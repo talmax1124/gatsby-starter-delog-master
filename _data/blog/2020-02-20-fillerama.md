@@ -1,9 +1,9 @@
 ---
 template: BlogPost
-path: /dummyhead
+path: /hej
 date: 2020-02-20T14:59:36.571Z
-title: Hey There Person
-metaDescription: Hgwgrewgerege
+title: "Oh No "
+metaDescription: Hey there
 thumbnail: /assets/image-5.jpg
 ---
-# Oh no. Gi fbefjgeookekpefokefbl efj sflm dldwlkmwd;kmwd;kmfdw;kmwefkm;wefkmefw
+# Oh no hey there
