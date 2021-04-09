@@ -1,7 +1,6 @@
 backend:
   name: github
-  # change repo to your git repository url
-  repo: W3Layouts/gatsby-starter-delog
+  repo: talmax1124/gatsby-starter-delog-master
 
 media_folder: static/assets
 public_folder: /assets
@@ -56,7 +55,7 @@ collections:
       - name: path
         label: Path
         widget: string
-        pattern: [/]
+        pattern: [/, 'Path must start with /']
         hint: "Path must start with /"
       - { name: date, label: Date, widget: datetime }
       - { name: title, label: Title }
