@@ -1,9 +1,16 @@
-import React from "react"
-import Helmet from 'react-helmet';
-import { graphql } from 'gatsby'
-import Layout from "../components/layout"
-import PostLink from "../components/post-link"
-import HeroHeader from "../components/heroHeader"
+import React from "react";
+import Helmet from "react-helmet";
+import { graphql } from "gatsby";
+import Layout from "../components/layout";
+import PostLink from "../components/post-link";
+import HeroHeader from "../components/heroHeader";
+import algoliasearch from "algoliasearch/lite";
+import { InstantSearch, SearchBox, Hits } from "react-instantsearch-dom";
+
+const searchClient = algoliasearch(
+  "JLIO2MFBJ9",
+  "129f53766051aa97f8382ee04d71a04b"
+);
 
 const IndexPage = ({
   data: {
@@ -11,10 +18,9 @@ const IndexPage = ({
     allMarkdownRemark: { edges },
   },
 }) => {
-
   const Posts = edges
-    .filter(edge => !!edge.node.frontmatter.date) // You can filter your posts based on some criteria
-    .map(edge => <PostLink key={edge.node.id} post={edge.node} />)
+    .filter((edge) => !!edge.node.frontmatter.date) // You can filter your posts based on some criteria
+    .map((edge) => <PostLink key={edge.node.id} post={edge.node} />);
 
   return (
     <Layout>
@@ -22,16 +28,20 @@ const IndexPage = ({
         <title>{site.siteMetadata.title}</title>
         <meta name="description" content={site.siteMetadata.description} />
       </Helmet>
-      <HeroHeader/>
-      <h2>Blog Posts &darr;</h2>
-      <div className="grids">
-        {Posts}
-      </div>
-    </Layout>
-  )
-}
+      <HeroHeader />
 
-export default IndexPage
+      <h2>Blog Posts &darr;</h2>
+      <p>Do not use search yet!!!</p>
+      <InstantSearch searchClient={searchClient} indexName="stories" >
+        <SearchBox />
+        <Hits />
+      </InstantSearch>
+      <div className="grids">{Posts}</div>
+    </Layout>
+  );
+};
+
+export default IndexPage;
 export const pageQuery = graphql`
   query indexPageQuery {
     site {
@@ -55,4 +65,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;

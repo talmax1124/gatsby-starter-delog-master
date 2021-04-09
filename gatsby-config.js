@@ -4,6 +4,32 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
+ require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`
+})
+
+const storyQuery = `
+{
+	allMarkdownRemark{
+		nodes{
+      objectID: id
+			frontmatter{
+					title
+      }
+      excerpt
+      html
+    }
+  }
+}
+`;
+
+const queries = [
+  {
+    query: storyQuery, 
+    transformer: ({ data }) => data.allMarkdownRemark.nodes, 
+  }
+]
+
 module.exports = {
   /* Your site config here */
   siteMetadata: require("./site-meta-data.json"),
@@ -40,6 +66,16 @@ module.exports = {
         trackingId: "UA-164743872-1",
         head: true,
       }
+    },
+    {
+      resolve: `gatsby-plugin-algolia`,
+      options: {
+        appId: process.env.ALGOLIA_APP_ID,
+        apiKey: process.env.ALGOLIA_API_KEY,
+        indexName: process.env.ALGOLIA_INDEX_NAME,
+        queries,
+        chunkSize: 1000,
+      },
     },
     {
       resolve: `gatsby-plugin-manifest`,
